@@ -44,18 +44,20 @@ class Affine extends React.Component<{ type: WorkspaceTypes }, object>{
     }
 
     handleClick(){
-        let cryptoProvider: AffineCrypto = new AffineCrypto()
-
-        let params: IAffineParams = {
-            mode: parseInt(this.state.mode),
-            a: parseInt(this.state.aNumber),
-            b: parseInt(this.state.bNumber),
-            input: this.state.input
+        if (parseInt(this.state.aNumber) > 0 && parseInt(this.state.bNumber) > 0){
+            let cryptoProvider: AffineCrypto = new AffineCrypto()
+            let params: IAffineParams = {
+                mode: parseInt(this.state.mode),
+                a: parseInt(this.state.aNumber),
+                b: parseInt(this.state.bNumber),
+                input: this.state.input
+            }
+            let output: string = cryptoProvider.operate(params)
+            this.setState({output: output})
         }
-
-        let output: string = cryptoProvider.operate(params)
-
-        this.setState({output: output})
+        else{
+            this.setState({output: "Числа \"a\" и \"b\" должны быть больше нуля"})
+        }
     }
 
    render() {
